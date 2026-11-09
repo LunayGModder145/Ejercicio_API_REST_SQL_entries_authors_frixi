@@ -1,8 +1,10 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 const entriesController = require('../controllers/entries.controller');
 
-// Rutas para /api/entries
 router.get('/', entriesController.getEntries);
 router.post('/', entriesController.createEntry);
+router.put('/', entriesController.updateEntry);
+router.delete('/', entriesController.deleteEntry);
 
 module.exports = router;

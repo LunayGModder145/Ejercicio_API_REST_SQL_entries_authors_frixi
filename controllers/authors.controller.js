@@ -10,19 +10,43 @@ const getAuthors = async (req, res) => {
         }
         res.status(200).json(data);
     } catch (error) {
-        console.error("DETALLE:", error); // Muestra el error en la terminal
-        res.status(500).json({ error: error.message }); // Muestra el error exacto en pantalla
+        console.error(error);
+        res.status(500).json({ error: "Error interno del servidor" });
     }
 };
 
 const createAuthor = async (req, res) => {
     try {
         const newAuthor = req.body;
-        const response = await authors.createAuthor(newAuthor);
+        await authors.createAuthor(newAuthor);
         res.status(201).json({
-            success: true,
-            message: `Autor creado correctamente`,
-            affectedRows: response
+            message: `usuario creado: ${newAuthor.email}`
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+};
+
+const updateAuthor = async (req, res) => {
+    try {
+        const updatedAuthor = req.body;
+        await authors.updateAuthor(updatedAuthor);
+        res.status(200).json({
+            message: `usuario actualizado: ${updatedAuthor.email}`
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+};
+
+const deleteAuthor = async (req, res) => {
+    try {
+        const { email } = req.body; // O req.query según lo prefieras
+        await authors.deleteAuthor(email);
+        res.status(200).json({
+            message: `Se ha borrado ${email}`
         });
     } catch (error) {
         console.error(error);
@@ -32,5 +56,7 @@ const createAuthor = async (req, res) => {
 
 module.exports = {
     getAuthors,
-    createAuthor
+    createAuthor,
+    updateAuthor,
+    deleteAuthor
 };

@@ -41,6 +41,33 @@ const authors = {
         } finally {
             if (client) client.release();
         }
+    },
+    updateAuthor: async (author) => {
+        let client;
+        try {
+            client = await pool.connect();
+            const { name, surname, image, email } = author;
+            const result = await client.query(queries.updateAuthor, [name, surname, image, email]);
+            return result.rowCount;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        } finally {
+            if (client) client.release();
+        }
+    },
+    deleteAuthor: async (email) => {
+        let client;
+        try {
+            client = await pool.connect();
+            const result = await client.query(queries.deleteAuthor, [email]);
+            return result.rowCount;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        } finally {
+            if (client) client.release();
+        }
     }
 };
 

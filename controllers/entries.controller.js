@@ -1,11 +1,10 @@
 const entries = require('../models/entries.model');
 
-// [GET] /api/entries (Retorna todas las entries o filtra por email si se pasa por query string)
 const getEntries = async (req, res) => {
     try {
         let data;
         if (req.query.email) {
-            data = await entries.getAllEntries(req.query.email);
+            data = await entries.getEntriesByEmail(req.query.email);
         } else {
             data = await entries.getAllEntries();
         }
@@ -16,22 +15,50 @@ const getEntries = async (req, res) => {
     }
 };
 
-// [POST] /api/entries (Crea nueva entry)
 const createEntry = async (req, res) => {
     try {
         const newEntry = req.body;
         const response = await entries.createEntry(newEntry);
         res.status(201).json({
+            success: true,
             message: `Entry creada correctamente`,
-            rowCount: response
+            affectedRows: response
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Error al crear la entry (comprueba que el título no esté repetido)" });
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+};
+
+const updateEntry = async (req, res) => {
+    try {
+        const updatedEntry = req.body;
+        const response = await entries.updateEntryByTitle(updatedEntry);
+        res.status(200).json({
+            message: `Se ha modificado la entry '${updatedEntry.title}'`
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+};
+
+const deleteEntry = async (req, res) => {
+    try {
+        const { title } = req.body;
+        await entries.deleteEntryByTitle(title);
+        res.status(200).json({
+            message: `Se ha borrado la entry '${title}'`
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error interno del servidor" });
     }
 };
 
 module.exports = {
     getEntries,
-    createEntry
+    createEntry,
+    updateEntry,
+    deleteEntry
 };
