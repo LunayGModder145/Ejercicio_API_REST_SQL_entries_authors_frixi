@@ -16,7 +16,7 @@ const getEntries = async (req, res) => {
     }
 };
 
-// [POST] /api/entries (Crea una nueva entry)
+// [POST] /api/entries (Crea nueva entry)
 const createEntry = async (req, res) => {
     try {
         const newEntry = req.body;
