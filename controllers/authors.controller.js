@@ -17,10 +17,17 @@ const getAuthors = async (req, res) => {
 
 const createAuthor = async (req, res) => {
     try {
-        const newAuthor = req.body;
-        await authors.createAuthor(newAuthor);
+        const { name, surname, email, image } = req.body;
+        
+        // Comprobar si el autor ya existe en la BBDD
+        const authorExists = await authors.getAuthorByEmail(email);
+        if (authorExists.length > 0) {
+            return res.status(400).json({ error: `El autor con email ${email} ya existe` });
+        }
+
+        await authors.createAuthor({ name, surname, email, image });
         res.status(201).json({
-            message: `usuario creado: ${newAuthor.email}`
+            message: `usuario creado: ${email}`
         });
     } catch (error) {
         console.error(error);
@@ -30,10 +37,19 @@ const createAuthor = async (req, res) => {
 
 const updateAuthor = async (req, res) => {
     try {
-        const updatedAuthor = req.body;
-        await authors.updateAuthor(updatedAuthor);
+        const { email, newName, newSurname, newImage, newEmail } = req.body;
+        // Si no mandan nuevo email, mantenemos el actual
+        const authorToUpdate = {
+            name: newName,
+            surname: newSurname,
+            image: newImage,
+            email: newEmail || email,
+            oldEmail: email
+        };
+        
+        await authors.updateAuthor(authorToUpdate);
         res.status(200).json({
-            message: `usuario actualizado: ${updatedAuthor.email}`
+            message: `usuario actualizado: ${authorToUpdate.email}`
         });
     } catch (error) {
         console.error(error);
@@ -43,7 +59,7 @@ const updateAuthor = async (req, res) => {
 
 const deleteAuthor = async (req, res) => {
     try {
-        const { email } = req.body; // O req.query según lo prefieras
+        const { email } = req.body;
         await authors.deleteAuthor(email);
         res.status(200).json({
             message: `Se ha borrado ${email}`

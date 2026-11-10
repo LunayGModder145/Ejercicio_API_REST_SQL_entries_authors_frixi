@@ -22,7 +22,19 @@ const entryQueries = {
     deleteEntryByTitle: `
         DELETE FROM entries 
         WHERE title = $1
-    `
+    `,
+    createTableEntries: `
+        CREATE TABLE IF NOT EXISTS entries (
+            id_entry serial PRIMARY KEY,
+            title varchar(100) NOT NULL UNIQUE,
+            content text NOT NULL,
+            date timestamp DEFAULT CURRENT_TIMESTAMP,
+            id_author int,
+            category varchar(15),
+            FOREIGN KEY (id_author) REFERENCES authors(id_author) ON DELETE CASCADE
+        );
+    `,
+    dropTableEntries: `DROP TABLE IF EXISTS entries;`
 };
 
 module.exports = entryQueries;

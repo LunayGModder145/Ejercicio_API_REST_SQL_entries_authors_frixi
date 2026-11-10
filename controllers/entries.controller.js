@@ -18,13 +18,15 @@ const getEntries = async (req, res) => {
 const createEntry = async (req, res) => {
     try {
         const newEntry = req.body;
-        const response = await entries.createEntry(newEntry);
+        await entries.createEntry(newEntry);
         res.status(201).json({
-            success: true,
-            message: `Entry creada correctamente`,
-            affectedRows: response
+            message: `Se ha creado la entry: ${newEntry.title}`
         });
     } catch (error) {
+        // Código 23505 = duplicado UNIQUE en PostgreSQL
+        if (error.code === '23505') {
+            return res.status(400).json({ error: "Ya existe una entrada con ese título" });
+        }
         console.error(error);
         res.status(500).json({ error: "Error interno del servidor" });
     }
@@ -35,7 +37,7 @@ const updateEntry = async (req, res) => {
         const updatedEntry = req.body;
         const response = await entries.updateEntryByTitle(updatedEntry);
         res.status(200).json({
-            message: `Se ha modificado la entry '${updatedEntry.title}'`
+            message: `Se ha modificado la entrada '${updatedEntry.title}'`
         });
     } catch (error) {
         console.error(error);
