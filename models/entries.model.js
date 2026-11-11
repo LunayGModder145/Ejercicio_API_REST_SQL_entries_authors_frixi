@@ -2,6 +2,7 @@ const pool = require('../config/db_pgsql');
 const queries = require('../queries/entry.queries');
 
 const entries = {
+    // Obtener todas las entradas con los datos de sus autores
     getAllEntries: async () => {
         let client;
         try {
@@ -15,6 +16,8 @@ const entries = {
             if (client) client.release();
         }
     },
+
+    // Obtener las entradas filtradas por el email del autor
     getEntriesByEmail: async (email) => {
         let client;
         try {
@@ -28,6 +31,8 @@ const entries = {
             if (client) client.release();
         }
     },
+
+    // Crear una nueva entrada vinculada a un autor
     createEntry: async (entry) => {
         let client;
         try {
@@ -42,6 +47,8 @@ const entries = {
             if (client) client.release();
         }
     },
+
+    // Actualizar una entrada existente por su título
     updateEntryByTitle: async (entry) => {
         let client;
         try {
@@ -56,6 +63,8 @@ const entries = {
             if (client) client.release();
         }
     },
+
+    // Eliminar entrada por título
     deleteEntryByTitle: async (title) => {
         let client;
         try {

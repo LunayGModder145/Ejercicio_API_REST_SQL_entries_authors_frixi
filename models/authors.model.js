@@ -1,7 +1,9 @@
+// Importación del pool de conexiones a PostgreSQL y las consultas SQL de autores
 const pool = require('../config/db_pgsql');
 const queries = require('../queries/author.queries');
 
 const authors = {
+    // Obtener todos los autores
     getAllAuthors: async () => {
         let client;
         try {
@@ -15,6 +17,8 @@ const authors = {
             if (client) client.release();
         }
     },
+
+    // Buscar un autor por su correo electrónico
     getAuthorByEmail: async (email) => {
         let client;
         try {
@@ -28,6 +32,8 @@ const authors = {
             if (client) client.release();
         }
     },
+
+    // Crear un nuevo autor
     createAuthor: async (author) => {
         let client;
         try {
@@ -42,6 +48,8 @@ const authors = {
             if (client) client.release();
         }
     },
+
+    // Actualizar los datos de un autor existente o recién creado
     updateAuthor: async (author) => {
         let client;
         try {
@@ -56,6 +64,8 @@ const authors = {
             if (client) client.release();
         }
     },
+
+    // Eliminar a un autor por email
     deleteAuthor: async (email) => {
         let client;
         try {

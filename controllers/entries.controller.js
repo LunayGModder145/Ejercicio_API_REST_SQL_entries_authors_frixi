@@ -1,5 +1,7 @@
+// Importe del modelo de entradas para gestionar las operaciones con la base de datos
 const entries = require('../models/entries.model');
 
+// Obtener todas las entradas o filtrar por el correo del autor si se proporciona en la consulta
 const getEntries = async (req, res) => {
     try {
         let data;
@@ -15,6 +17,7 @@ const getEntries = async (req, res) => {
     }
 };
 
+// Crear una nueva entrada en la base de datos
 const createEntry = async (req, res) => {
     try {
         const newEntry = req.body;
@@ -32,6 +35,7 @@ const createEntry = async (req, res) => {
     }
 };
 
+// Modificar una entrada existente identificándola por su título
 const updateEntry = async (req, res) => {
     try {
         const updatedEntry = req.body;
@@ -45,6 +49,7 @@ const updateEntry = async (req, res) => {
     }
 };
 
+// Eliminar una entrada a partir de su título
 const deleteEntry = async (req, res) => {
     try {
         const { title } = req.body;

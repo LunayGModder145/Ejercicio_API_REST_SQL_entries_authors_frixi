@@ -1,3 +1,4 @@
+// Consultas SQL para autores 
 const authorQueries = {
     getAllAuthors: `SELECT * FROM authors`,
     getAuthorByEmail: `SELECT * FROM authors WHERE email = $1`,

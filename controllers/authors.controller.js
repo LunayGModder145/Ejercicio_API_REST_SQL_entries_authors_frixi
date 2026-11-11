@@ -1,5 +1,7 @@
+// Importación del modelo de autores para interactuar con la base de datos
 const authors = require('../models/authors.model');
 
+// Obtener todos los autores o filtrar por email si se proporciona como query param
 const getAuthors = async (req, res) => {
     try {
         let data;
@@ -15,6 +17,7 @@ const getAuthors = async (req, res) => {
     }
 };
 
+// Crear un nuevo autor tras comprobar que no exista previamente
 const createAuthor = async (req, res) => {
     try {
         const { name, surname, email, image } = req.body;
@@ -35,6 +38,7 @@ const createAuthor = async (req, res) => {
     }
 };
 
+// Actualizar los datos de un autor existente
 const updateAuthor = async (req, res) => {
     try {
         const { email, newName, newSurname, newImage, newEmail } = req.body;
@@ -57,6 +61,7 @@ const updateAuthor = async (req, res) => {
     }
 };
 
+// Eliminar un autor por su correo electrónico
 const deleteAuthor = async (req, res) => {
     try {
         const { email } = req.body;

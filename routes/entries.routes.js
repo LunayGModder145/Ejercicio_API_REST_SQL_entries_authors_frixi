@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const entriesController = require('../controllers/entries.controller');
 const checkValidation = require('../middlewares/checkValidation');
+
+// Importe de cada validador para cada operación de entradas
 const {
     validateGetEntries,
     validateCreateEntry,

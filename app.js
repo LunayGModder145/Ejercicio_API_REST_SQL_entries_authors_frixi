@@ -1,3 +1,4 @@
+// Importación de dependencias principales
 const express = require('express');
 const morgan = require('./middlewares/morgan'); // O deja 'morgan' normal si prefieres 'dev'
 const app = express();
