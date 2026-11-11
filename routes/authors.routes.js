@@ -7,7 +7,7 @@ const {
     validateCreateAuthor,
     validateUpdateAuthor,
     validateDeleteAuthor
-} = require('../validators/authors.validators');
+} = require('../middlewares/authors.validators');
 
 router.get('/', validateGetAuthors, checkValidation, authorsController.getAuthors);
 
