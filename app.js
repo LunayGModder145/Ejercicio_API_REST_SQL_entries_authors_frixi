@@ -1,5 +1,5 @@
 const express = require('express');
-const morgan = require('morgan');
+const morgan = require('./middlewares/morgan'); // O deja 'morgan' normal si prefieres 'dev'
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -8,7 +8,7 @@ const entriesRoutes = require('./routes/entries.routes');
 const authorsRoutes = require('./routes/authors.routes');
 
 // Middlewares
-app.use(morgan('dev'));
+app.use(morgan('[:date[iso]] :method :clean-url :status - :body')); // O app.use(morgan('dev'))
 app.use(express.json());
 
 // Uso de rutas
