@@ -16,6 +16,17 @@ app.use(express.json());
 app.use('/api/entries', entriesRoutes);
 app.use('/api/authors', authorsRoutes);
 
+// Bienvenida
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: "Hello World!",
+    endpoints: {
+      authors: "/api/authors",
+      entries: "/api/entries"
+    }
+  });
+});
+
 // Ruta por defecto para controlar endpoints no encontrados (con error 404)
 app.use((req, res) => {
     res.status(404).json({ error: "Ruta no encontrada" });
